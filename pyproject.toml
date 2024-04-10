@@ -3,8 +3,8 @@ requires = ["setuptools>=42.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
-addopts = '--cov=playground'
-testpaths = ["tests"]
+addopts = '--cov=playground --doctest-modules'
+testpaths = ["src", "tests"]
 
 [tool.mypy]
 mypy_path = "src"
