@@ -1,6 +1,5 @@
 """Binary Search Tree module to test tree creation"""
 
-from collections.abc import Callable
 import pytest
 
 from playground.tree import BinarySearchTree
