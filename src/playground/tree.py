@@ -27,7 +27,7 @@ class BinarySearchTree(Generic[T], Collection[T]):
 
     It does not allow instantiating an unsorted tree. For example:
 
-    >>> BinarySearchTree(1, left=BinarySearchTree(2)) # doctest: +SKIP
+    >>> BinarySearchTree(1, left=BinarySearchTree(2))
     Traceback (most recent call last):
         ...
     ValueError: Unsorted BinarySearchTree: 2 cannot be to the left of 1
@@ -56,6 +56,23 @@ class BinarySearchTree(Generic[T], Collection[T]):
         self.val = val
         self._left = left
         self._right = right
+        self._validate()
+
+    def _validate(self) -> None:
+        if self._left is not None:
+            if self._left.val > self.val:
+                raise ValueError(
+                    "Unsorted BinarySearchTree: "
+                    f"{self._left.val} cannot be to the left of {self.val}"
+                )
+            self._left._validate()
+        if self._right is not None:
+            if self._right.val < self.val:
+                raise ValueError(
+                    "Unsorted BinarySearchTree: "
+                    f"{self._right.val} cannot be to the right of {self.val}"
+                )
+            self._right._validate()
 
     def __contains__(self, x: object) -> bool:
         raise NotImplementedError

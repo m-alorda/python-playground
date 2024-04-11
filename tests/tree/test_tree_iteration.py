@@ -37,7 +37,7 @@ from playground.tree import BinarySearchTree
             ),
         ),
         (
-            (3, 4, 6, 10, 12, 13, 14, 14, 16, 20, 23),
+            (3, 4, 6, 10, 12, 13, 14, 15, 16, 20, 23),
             BinarySearchTree(
                 10,
                 left=BinarySearchTree(
@@ -50,11 +50,11 @@ from playground.tree import BinarySearchTree
                 right=BinarySearchTree(
                     16,
                     left=BinarySearchTree(
-                        14,
+                        13,
                         left=BinarySearchTree(12),
                         right=BinarySearchTree(
-                            13,
-                            right=BinarySearchTree(14),
+                            14,
+                            right=BinarySearchTree(15),
                         ),
                     ),
                     right=BinarySearchTree(
@@ -106,7 +106,7 @@ def test_in_order_iteration(
             ),
         ),
         (
-            (10, 6, 3, 4, 16, 14, 12, 13, 14, 20, 23),
+            (10, 6, 3, 4, 16, 13, 12, 14, 15, 20, 23),
             BinarySearchTree(
                 10,
                 left=BinarySearchTree(
@@ -119,11 +119,11 @@ def test_in_order_iteration(
                 right=BinarySearchTree(
                     16,
                     left=BinarySearchTree(
-                        14,
+                        13,
                         left=BinarySearchTree(12),
                         right=BinarySearchTree(
-                            13,
-                            right=BinarySearchTree(14),
+                            14,
+                            right=BinarySearchTree(15),
                         ),
                     ),
                     right=BinarySearchTree(
@@ -175,7 +175,7 @@ def test_pre_order_iteration(
             ),
         ),
         (
-            (4, 3, 6, 12, 14, 13, 14, 23, 20, 16, 10),
+            (4, 3, 6, 12, 15, 14, 13, 23, 20, 16, 10),
             BinarySearchTree(
                 10,
                 left=BinarySearchTree(
@@ -188,11 +188,11 @@ def test_pre_order_iteration(
                 right=BinarySearchTree(
                     16,
                     left=BinarySearchTree(
-                        14,
+                        13,
                         left=BinarySearchTree(12),
                         right=BinarySearchTree(
-                            13,
-                            right=BinarySearchTree(14),
+                            14,
+                            right=BinarySearchTree(15),
                         ),
                     ),
                     right=BinarySearchTree(

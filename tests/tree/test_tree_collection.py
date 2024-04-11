@@ -173,7 +173,7 @@ def test_length(
             ),
         ),
         (
-            (10, 6, 16, 3, 14, 20, 4, 12, 13, 23, 14),
+            (10, 6, 16, 3, 13, 20, 4, 12, 14, 23, 15),
             BinarySearchTree(
                 10,
                 left=BinarySearchTree(
@@ -186,11 +186,11 @@ def test_length(
                 right=BinarySearchTree(
                     16,
                     left=BinarySearchTree(
-                        14,
+                        13,
                         left=BinarySearchTree(12),
                         right=BinarySearchTree(
-                            13,
-                            right=BinarySearchTree(14),
+                            14,
+                            right=BinarySearchTree(15),
                         ),
                     ),
                     right=BinarySearchTree(

@@ -32,63 +32,101 @@ def test_can_create_tree_with_duplicates():
     BinarySearchTree(1, left=BinarySearchTree(1), right=BinarySearchTree(1))
 
 
-@pytest.mark.parametrize(
-    ("tree_producer",),
-    (
-        (
-            lambda: BinarySearchTree(
-                1,
-                left=BinarySearchTree(2),
+def test_can_not_create_unsorted_tree_from_the_root():
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            1,
+            left=BinarySearchTree(
+                # Is larger and to the left of the root
+                2
             ),
-        ),
-        (
-            lambda: BinarySearchTree(
-                2,
-                right=BinarySearchTree(1),
+        )
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            2,
+            right=BinarySearchTree(
+                # Is smaller and to the right of the root
+                1
             ),
-        ),
-        (
-            lambda: BinarySearchTree(
-                2,
-                left=BinarySearchTree(1),
-                right=BinarySearchTree(1),
+        )
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            2,
+            left=BinarySearchTree(1),
+            right=BinarySearchTree(
+                # Is smaller and to the right of the root
+                1
             ),
-        ),
-        (
-            lambda: BinarySearchTree(
-                2,
-                left=BinarySearchTree(1),
-                right=BinarySearchTree(
-                    3,
-                    left=BinarySearchTree(4),
+        )
+
+
+def test_can_not_create_unsorted_tree_from_its_parent():
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            2,
+            left=BinarySearchTree(1),
+            right=BinarySearchTree(
+                3,
+                left=BinarySearchTree(
+                    # Is larger and to the left of its parent
+                    4
                 ),
             ),
-        ),
-        (
-            lambda: BinarySearchTree(
-                3,
-                left=BinarySearchTree(2),
+        )
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            3,
+            left=BinarySearchTree(2),
+            right=BinarySearchTree(
+                5,
                 right=BinarySearchTree(
-                    5,
+                    # Is smaller and to the right of its parent
+                    4
+                ),
+            ),
+        )
+
+
+@pytest.mark.xfail
+def test_can_not_create_unsorted_tree_from_the_root_in_a_higher_level():
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            3,
+            left=BinarySearchTree(2),
+            right=BinarySearchTree(
+                4,
+                left=BinarySearchTree(
+                    # Is smaller and to the left of the root
+                    1
+                ),
+            ),
+        )
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            10,
+            left=BinarySearchTree(
+                6,
+                left=BinarySearchTree(
+                    3,
                     right=BinarySearchTree(4),
                 ),
             ),
-        ),
-        (
-            lambda: BinarySearchTree(
-                3,
-                left=BinarySearchTree(2),
+            right=BinarySearchTree(
+                16,
+                left=BinarySearchTree(
+                    13,
+                    left=BinarySearchTree(
+                        # Is smaller and to the right of the root
+                        8
+                    ),
+                    right=BinarySearchTree(
+                        14,
+                        right=BinarySearchTree(15),
+                    ),
+                ),
                 right=BinarySearchTree(
-                    4,
-                    left=BinarySearchTree(1),
+                    20,
+                    right=BinarySearchTree(23),
                 ),
             ),
-        ),
-    ),
-)
-@pytest.mark.xfail
-def test_can_not_create_unsorted_tree(
-    tree_producer: Callable[..., BinarySearchTree[int]],
-):
-    with pytest.raises(ValueError):
-        tree_producer()
+        )
