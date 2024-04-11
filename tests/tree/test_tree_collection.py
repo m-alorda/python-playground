@@ -125,9 +125,9 @@ def test_not_contains(
                 3,
                 left=BinarySearchTree(2),
                 right=BinarySearchTree(
-                    4,
-                    left=BinarySearchTree(1),
-                    right=BinarySearchTree(5),
+                    5,
+                    left=BinarySearchTree(4),
+                    right=BinarySearchTree(6),
                 ),
             ),
         ),

@@ -86,7 +86,6 @@ def test_can_not_create_unsorted_tree_from_its_parent():
         )
 
 
-@pytest.mark.xfail
 def test_can_not_create_unsorted_tree_from_the_root_in_a_higher_level():
     with pytest.raises(ValueError):
         BinarySearchTree(
@@ -97,6 +96,36 @@ def test_can_not_create_unsorted_tree_from_the_root_in_a_higher_level():
                 left=BinarySearchTree(
                     # Is smaller and to the left of the root
                     1
+                ),
+            ),
+        )
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            50,
+            left=BinarySearchTree(
+                20,
+                left=BinarySearchTree(
+                    10,
+                    right=BinarySearchTree(
+                        # Is larger and to the left 20
+                        30
+                    ),
+                ),
+            ),
+            right=BinarySearchTree(80),
+        )
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            40,
+            left=BinarySearchTree(
+                20,
+                right=BinarySearchTree(
+                    30,
+                    left=BinarySearchTree(
+                        # Is smaller and to the right 20
+                        10,
+                        right=BinarySearchTree(24),
+                    ),
                 ),
             ),
         )

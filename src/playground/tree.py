@@ -60,21 +60,31 @@ class BinarySearchTree(Generic[T], Collection[T]):
         self._right = right
         self._validate()
 
-    def _validate(self) -> None:
+    def _validate(
+        self,
+        lower_bound: T | None = None,
+        upper_bound: T | None = None,
+    ) -> None:
+        if lower_bound is not None and self.val < lower_bound:
+            raise ValueError(
+                "Unsorted BinarySearchTree: "
+                f"{self.val} cannot be to the right of {lower_bound}"
+            )
+        if upper_bound is not None and self.val > upper_bound:
+            raise ValueError(
+                "Unsorted BinarySearchTree: "
+                f"{self.val} cannot be to the left of {upper_bound}"
+            )
         if self._left is not None:
-            if self._left.val > self.val:
-                raise ValueError(
-                    "Unsorted BinarySearchTree: "
-                    f"{self._left.val} cannot be to the left of {self.val}"
-                )
-            self._left._validate()
+            self._left._validate(
+                lower_bound=lower_bound,
+                upper_bound=self.val,
+            )
         if self._right is not None:
-            if self._right.val < self.val:
-                raise ValueError(
-                    "Unsorted BinarySearchTree: "
-                    f"{self._right.val} cannot be to the right of {self.val}"
-                )
-            self._right._validate()
+            self._right._validate(
+                lower_bound=self.val,
+                upper_bound=upper_bound,
+            )
 
     def __contains__(self, x: object) -> bool:
         raise NotImplementedError
