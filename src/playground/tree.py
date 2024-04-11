@@ -34,7 +34,9 @@ class BinarySearchTree(Generic[T], Collection[T]):
 
     By default, it is iterated in breadth-first order:
 
-    >>> tuple(BinarySearchTree(2, left=BinarySearchTree(1), right=BinarySearchTree(3))) # doctest: +SKIP
+    >>> tuple(
+    ...     BinarySearchTree(2, left=BinarySearchTree(1), right=BinarySearchTree(3))
+    ... ) # doctest: +SKIP
     (2, 1, 3)
 
     It has a 1-based height:

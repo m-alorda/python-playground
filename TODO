@@ -1,0 +1,5 @@
+# TODO
+
+- Add add isort on CI - precommit
+- Add black formatting on CI - precommit
+- Add insertion and deletion to the tree, rebalancing it
