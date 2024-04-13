@@ -32,12 +32,12 @@ class BinarySearchTree(Generic[T], Collection[T]):
         ...
     ValueError: Unsorted BinarySearchTree: 2 cannot be to the left of 1
 
-    By default, it is iterated in breadth-first order:
+    By default, it is iterated in depth-first in-order:
 
     >>> tuple(
     ...     BinarySearchTree(2, left=BinarySearchTree(1), right=BinarySearchTree(3))
-    ... ) # doctest: +SKIP
-    (2, 1, 3)
+    ... )
+    (1, 2, 3)
 
     It has a 1-based height:
 
