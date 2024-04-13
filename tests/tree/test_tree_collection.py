@@ -150,7 +150,7 @@ def test_length(
             BinarySearchTree(1),
         ),
         (
-            (2, 1, 3),
+            (1, 2, 3),
             BinarySearchTree(
                 2,
                 left=BinarySearchTree(1),
@@ -158,7 +158,7 @@ def test_length(
             ),
         ),
         (
-            (5, 3, 7, 1, 4, 6, 8),
+            (1, 3, 4, 5, 6, 7, 8),
             BinarySearchTree(
                 5,
                 left=BinarySearchTree(
@@ -174,7 +174,7 @@ def test_length(
             ),
         ),
         (
-            (10, 6, 16, 3, 13, 20, 4, 12, 14, 23, 15),
+            (3, 4, 6, 10, 12, 13, 14, 15, 16, 20, 23),
             BinarySearchTree(
                 10,
                 left=BinarySearchTree(
@@ -203,10 +203,9 @@ def test_length(
         ),
     ),
 )
-@pytest.mark.xfail
 def test_default_iteration_order(
     expected_elements: tuple[int, ...],
     tree: BinarySearchTree[int],
 ):
     assert tuple(tree) == expected_elements
-    assert tuple(tree.breadth_first_iterator()) == expected_elements
+    assert tuple(tree.depth_first_in_order_iterator()) == expected_elements
