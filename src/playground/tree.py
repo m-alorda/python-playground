@@ -106,7 +106,12 @@ class BinarySearchTree(Generic[T], Collection[T]):
         return self.breadth_first_iterator()
 
     def __len__(self) -> int:
-        raise NotImplementedError
+        length = 1
+        if self._left is not None:
+            length += len(self._left)
+        if self._right is not None:
+            length += len(self._right)
+        return length
 
     def breadth_first_iterator(self) -> Iterator[T]:
         raise NotImplementedError

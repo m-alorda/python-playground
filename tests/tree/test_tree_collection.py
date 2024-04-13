@@ -135,7 +135,6 @@ def test_cannot_contain_an_element_of_different_type():
         ),
     ),
 )
-@pytest.mark.xfail
 def test_length(
     expected_length: int,
     tree: BinarySearchTree[int],
