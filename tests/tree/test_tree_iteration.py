@@ -203,7 +203,6 @@ def test_pre_order_iteration(
         ),
     ),
 )
-@pytest.mark.xfail
 def test_post_order_iteration(
     expected_elements: tuple[int, ...],
     tree: BinarySearchTree[int],
