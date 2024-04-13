@@ -117,7 +117,11 @@ class BinarySearchTree(Generic[T], Collection[T]):
         raise NotImplementedError
 
     def depth_first_pre_order_iterator(self) -> Iterator[T]:
-        raise NotImplementedError
+        yield self.val
+        if self._left is not None:
+            yield from self._left.depth_first_pre_order_iterator()
+        if self._right is not None:
+            yield from self._right.depth_first_pre_order_iterator()
 
     def depth_first_in_order_iterator(self) -> Iterator[T]:
         if self._left is not None:

@@ -135,7 +135,6 @@ def test_breath_first_iteration(
         ),
     ),
 )
-@pytest.mark.xfail
 def test_pre_order_iteration(
     expected_elements: tuple[int, ...],
     tree: BinarySearchTree[int],
