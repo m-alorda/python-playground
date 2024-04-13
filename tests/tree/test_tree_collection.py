@@ -38,7 +38,6 @@ from playground.tree import BinarySearchTree
         ),
     ),
 )
-@pytest.mark.xfail
 def test_contains(
     value: int,
     tree: BinarySearchTree[int],
@@ -79,12 +78,15 @@ def test_contains(
         ),
     ),
 )
-@pytest.mark.xfail
 def test_not_contains(
     value: int,
     tree: BinarySearchTree[int],
 ):
     assert value not in tree
+
+
+def test_cannot_contain_an_element_of_different_type():
+    assert "1" not in BinarySearchTree(1)  # type: ignore
 
 
 @pytest.mark.parametrize(

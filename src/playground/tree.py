@@ -87,7 +87,20 @@ class BinarySearchTree(Generic[T], Collection[T]):
             )
 
     def __contains__(self, x: object) -> bool:
-        raise NotImplementedError
+        if not isinstance(x, self.val.__class__):
+            return False
+        return self._contains_type_safe(x)
+
+    def _contains_type_safe(self, x: T) -> bool:
+        if x == self.val:
+            return True
+        if x < self.val:
+            if self._left is None:
+                return False
+            return self._left._contains_type_safe(x)
+        if self._right is None:
+            return False
+        return self._right._contains_type_safe(x)
 
     def __iter__(self) -> Iterator[T]:
         return self.breadth_first_iterator()
