@@ -1,6 +1,6 @@
 """Dummy module tests"""
 
-from math import isclose, inf, isnan
+from math import inf, isclose, isnan
 
 import pytest
 
