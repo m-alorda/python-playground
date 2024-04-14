@@ -27,4 +27,4 @@ tox
 
 [mCoding-channel]: https://www.youtube.com/@mCoding
 [mCoding-reference-video]: https://youtu.be/DhUpxWjOhME?si=myJrKVfroLfKz7Hw
-[github-tests-badge]: https://github.com/m-alorda/python-playground/actions/workflows/tests.yml/badge.svg
+[github-tests-badge]: https://github.com/m-alorda/python-playground/actions/workflows/tests.yml/badge.svg?event=push
