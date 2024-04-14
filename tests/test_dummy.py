@@ -10,7 +10,7 @@ from playground import dummy
 @pytest.mark.parametrize(
     ("x", "y", "expected"),
     (
-        (3, 4, 7),
+        (3, 4, 5),
         (2, 8, 10),
         (-1, -2, -3),
         (-1, 7, 6),
