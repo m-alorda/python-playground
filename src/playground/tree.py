@@ -1,13 +1,13 @@
 """Simple Binary Tree implementation"""
 
-from collections.abc import MutableSequence, Collection, Iterator
+from collections.abc import Collection, Iterator, MutableSequence
 from typing import Any, Generic, Protocol, TypeVar
 
-T = TypeVar("T", bound="_Comparable")  
+T = TypeVar("T", bound="_Comparable")
+
 
 class _Comparable(Protocol):
-    def __eq__(self, other: Any, /) -> bool:
-        ...
+    def __eq__(self, other: Any, /) -> bool: ...
     def __lt__(self: T, other: T, /) -> bool: ...
     def __gt__(self: T, other: T, /) -> bool: ...
     def __le__(self: T, other: T, /) -> bool: ...
@@ -193,7 +193,7 @@ class BinarySearchTree(Generic[T], Collection[T]):
         if self._right is not None:
             yield from self._right.depth_first_in_order_iterator()
 
-    def depth_first_post_order_iterator(self)->Iterator[T]:
+    def depth_first_post_order_iterator(self) -> Iterator[T]:
         """Iterate through all tree elements, in left-right-value order
 
         >>> tuple(
@@ -212,11 +212,11 @@ class BinarySearchTree(Generic[T], Collection[T]):
         ...     ).depth_first_post_order_iterator()
         ... )
         (1, 3, 2, 5, 7, 6, 4)
-        """ 
+        """
         if self._left is not None:
-            yield from self._left.depth_first_post_order_iterator( )  
+            yield from self._left.depth_first_post_order_iterator()
         if self._right is not None:
-            yield from self._right.depth_first_post_order_iterator( )  
+            yield from self._right.depth_first_post_order_iterator()
         yield self.val
 
     @property
