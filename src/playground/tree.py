@@ -1,6 +1,6 @@
 """Simple Binary Tree implementation"""
 
-from collections.abc import Collection, Iterator
+from collections.abc import Collection, Iterator, MutableSequence
 from typing import Any, Generic, Protocol, TypeVar
 
 T = TypeVar("T", bound="_Comparable")
@@ -113,8 +113,22 @@ class BinarySearchTree(Generic[T], Collection[T]):
             length += len(self._right)
         return length
 
-    def breadth_first_iterator(self) -> Iterator[T]:
-        raise NotImplementedError
+    def breadth_first_iterator(
+        self,
+    ) -> Iterator[T]:
+        yield from self._breadth_first_iterator(tree_queue=list())
+
+    def _breadth_first_iterator(
+        self,
+        tree_queue: MutableSequence["BinarySearchTree[T]"],
+    ) -> Iterator[T]:
+        yield self.val
+        if self._left is not None:
+            tree_queue.append(self._left)
+        if self._right is not None:
+            tree_queue.append(self._right)
+        if len(tree_queue) > 0:
+            yield from tree_queue.pop(0)._breadth_first_iterator(tree_queue)
 
     def depth_first_pre_order_iterator(self) -> Iterator[T]:
         yield self.val

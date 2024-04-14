@@ -66,7 +66,6 @@ from playground.tree import BinarySearchTree
         ),
     ),
 )
-@pytest.mark.xfail
 def test_breath_first_iteration(
     expected_elements: tuple[int, ...],
     tree: BinarySearchTree[int],
