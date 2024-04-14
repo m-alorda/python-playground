@@ -12,8 +12,3 @@ def add(x: int | float, y: int | float) -> int | float:
     5.7
     """
     return x + y
-
-
-if __name__ == "__main__":
-    print("Running dummy module entrypoint")
-    print(f"The result of add(3, 4) is {add(3, 4)}")
