@@ -11,6 +11,14 @@ addopts = '''
     '''
 testpaths = ["src", "tests"]
 
+[tool.isort]
+profile = "black"
+src_paths = ["src", "tests"]
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+
 [tool.mypy]
 mypy_path = "src"
 check_untyped_defs = true
