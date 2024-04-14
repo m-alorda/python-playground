@@ -153,4 +153,6 @@ class BinarySearchTree(Generic[T], Collection[T]):
 
     @property
     def height(self) -> int:
-        raise NotImplementedError
+        left_height = self._left.height if self._left is not None else 0
+        right_height = self._right.height if self._right is not None else 0
+        return 1 + (left_height if left_height > right_height else right_height)
