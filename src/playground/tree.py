@@ -38,14 +38,6 @@ class BinarySearchTree(Generic[T], Collection[T]):
     ...     BinarySearchTree(2, left=BinarySearchTree(1), right=BinarySearchTree(3))
     ... )
     (1, 2, 3)
-
-    It has a 1-based height:
-
-    >>> BinarySearchTree(1).height # doctest: +SKIP
-    1
-
-    >>> BinarySearchTree(2, left=BinarySearchTree(1)).height # doctest: +SKIP
-    2
     """
 
     def __init__(
@@ -116,6 +108,25 @@ class BinarySearchTree(Generic[T], Collection[T]):
     def breadth_first_iterator(
         self,
     ) -> Iterator[T]:
+        """Iterate through all tree elements, layer by layer
+
+        >>> tuple(
+        ...     BinarySearchTree(
+        ...         4,
+        ...         left=BinarySearchTree(
+        ...             2,
+        ...             left=BinarySearchTree(1),
+        ...             right=BinarySearchTree(3),
+        ...         ),
+        ...         right=BinarySearchTree(
+        ...             6,
+        ...             left=BinarySearchTree(5),
+        ...             right=BinarySearchTree(7),
+        ...         ),
+        ...     ).breadth_first_iterator()
+        ... )
+        (4, 2, 6, 1, 3, 5, 7)
+        """
         yield from self._breadth_first_iterator(tree_queue=list())
 
     def _breadth_first_iterator(
@@ -131,6 +142,25 @@ class BinarySearchTree(Generic[T], Collection[T]):
             yield from tree_queue.pop(0)._breadth_first_iterator(tree_queue)
 
     def depth_first_pre_order_iterator(self) -> Iterator[T]:
+        """Iterate through all tree elements, in value-left-right order
+
+        >>> tuple(
+        ...     BinarySearchTree(
+        ...         4,
+        ...         left=BinarySearchTree(
+        ...             2,
+        ...             left=BinarySearchTree(1),
+        ...             right=BinarySearchTree(3),
+        ...         ),
+        ...         right=BinarySearchTree(
+        ...             6,
+        ...             left=BinarySearchTree(5),
+        ...             right=BinarySearchTree(7),
+        ...         ),
+        ...     ).depth_first_pre_order_iterator()
+        ... )
+        (4, 2, 1, 3, 6, 5, 7)
+        """
         yield self.val
         if self._left is not None:
             yield from self._left.depth_first_pre_order_iterator()
@@ -138,6 +168,25 @@ class BinarySearchTree(Generic[T], Collection[T]):
             yield from self._right.depth_first_pre_order_iterator()
 
     def depth_first_in_order_iterator(self) -> Iterator[T]:
+        """Iterate through all tree elements, in left-value-right order (sort order)
+
+        >>> tuple(
+        ...     BinarySearchTree(
+        ...         4,
+        ...         left=BinarySearchTree(
+        ...             2,
+        ...             left=BinarySearchTree(1),
+        ...             right=BinarySearchTree(3),
+        ...         ),
+        ...         right=BinarySearchTree(
+        ...             6,
+        ...             left=BinarySearchTree(5),
+        ...             right=BinarySearchTree(7),
+        ...         ),
+        ...     ).depth_first_in_order_iterator()
+        ... )
+        (1, 2, 3, 4, 5, 6, 7)
+        """
         if self._left is not None:
             yield from self._left.depth_first_in_order_iterator()
         yield self.val
@@ -145,6 +194,25 @@ class BinarySearchTree(Generic[T], Collection[T]):
             yield from self._right.depth_first_in_order_iterator()
 
     def depth_first_post_order_iterator(self) -> Iterator[T]:
+        """Iterate through all tree elements, in left-right-value order
+
+        >>> tuple(
+        ...     BinarySearchTree(
+        ...         4,
+        ...         left=BinarySearchTree(
+        ...             2,
+        ...             left=BinarySearchTree(1),
+        ...             right=BinarySearchTree(3),
+        ...         ),
+        ...         right=BinarySearchTree(
+        ...             6,
+        ...             left=BinarySearchTree(5),
+        ...             right=BinarySearchTree(7),
+        ...         ),
+        ...     ).depth_first_post_order_iterator()
+        ... )
+        (1, 3, 2, 5, 7, 6, 4)
+        """
         if self._left is not None:
             yield from self._left.depth_first_post_order_iterator()
         if self._right is not None:
@@ -153,6 +221,14 @@ class BinarySearchTree(Generic[T], Collection[T]):
 
     @property
     def height(self) -> int:
+        """1-based height of the tree
+
+        >>> BinarySearchTree(1).height
+        1
+
+        >>> BinarySearchTree(2, left=BinarySearchTree(1)).height
+        2
+        """
         left_height = self._left.height if self._left is not None else 0
         right_height = self._right.height if self._right is not None else 0
         return 1 + (left_height if left_height > right_height else right_height)
