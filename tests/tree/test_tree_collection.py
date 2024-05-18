@@ -172,79 +172,181 @@ def test_length(
 
 
 @pytest.mark.parametrize(
-    ("expected_elements", "tree"),
+    ("val", "expected_result", "tree"),
     (
         (
-            (),
+            1,
+            (1,),
             BinarySearchTree(),
         ),
         (
-            (1,),
+            1,
+            (1, 1),
             BinarySearchTree(BinaryTreeNode(1)),
         ),
         (
-            (1, 2, 3),
+            1,
+            (1, 2, 3, 4, 5, 6),
             BinarySearchTree(
                 BinaryTreeNode(
-                    2,
-                    left=BinaryTreeNode(1),
-                    right=BinaryTreeNode(3),
-                ),
-            ),
-        ),
-        (
-            (1, 3, 4, 5, 6, 7, 8),
-            BinarySearchTree(
-                BinaryTreeNode(
-                    5,
-                    left=BinaryTreeNode(
-                        3,
-                        left=BinaryTreeNode(1),
-                        right=BinaryTreeNode(4),
-                    ),
+                    3,
+                    left=BinaryTreeNode(2),
                     right=BinaryTreeNode(
-                        7,
-                        left=BinaryTreeNode(6),
-                        right=BinaryTreeNode(8),
+                        5,
+                        left=BinaryTreeNode(4),
+                        right=BinaryTreeNode(6),
                     ),
                 ),
             ),
         ),
         (
-            (3, 4, 6, 10, 12, 13, 14, 15, 16, 20, 23),
+            7,
+            (2, 3, 4, 7, 8, 15),
             BinarySearchTree(
                 BinaryTreeNode(
-                    10,
-                    left=BinaryTreeNode(
-                        6,
-                        left=BinaryTreeNode(
-                            3,
-                            right=BinaryTreeNode(4),
-                        ),
-                    ),
+                    3,
+                    left=BinaryTreeNode(2),
                     right=BinaryTreeNode(
-                        16,
-                        left=BinaryTreeNode(
-                            13,
-                            left=BinaryTreeNode(12),
-                            right=BinaryTreeNode(
-                                14,
-                                right=BinaryTreeNode(15),
-                            ),
-                        ),
-                        right=BinaryTreeNode(
-                            20,
-                            right=BinaryTreeNode(23),
-                        ),
+                        8,
+                        left=BinaryTreeNode(4),
+                        right=BinaryTreeNode(15),
                     ),
                 ),
             ),
         ),
     ),
 )
-def test_default_iteration_order(
-    expected_elements: tuple[int, ...],
+def test_add(
+    val: int,
+    expected_result: tuple[int, ...],
     tree: BinarySearchTree[int],
 ):
-    assert tuple(tree) == expected_elements
-    assert tuple(tree.depth_first_in_order_iterator()) == expected_elements
+    tree.add(val)
+    assert tuple(tree) == expected_result
+
+
+@pytest.mark.parametrize(
+    ("val", "expected_result", "tree"),
+    (
+        (
+            # Remove the only value in the tree
+            1,
+            (),
+            BinarySearchTree(BinaryTreeNode(1)),
+        ),
+        (
+            # Remove a left leaf node
+            1,
+            (2,),
+            BinarySearchTree(
+                BinaryTreeNode(2, left=BinaryTreeNode(1)),
+            ),
+        ),
+        (
+            # Remove a right leaf node
+            2,
+            (1,),
+            BinarySearchTree(
+                BinaryTreeNode(1, right=BinaryTreeNode(2)),
+            ),
+        ),
+        (
+            # Remove the root node with a left subtree
+            2,
+            (1,),
+            BinarySearchTree(
+                BinaryTreeNode(2, left=BinaryTreeNode(1)),
+            ),
+        ),
+        (
+            # Remove the root node with a right subtree
+            1,
+            (2,),
+            BinarySearchTree(
+                BinaryTreeNode(1, right=BinaryTreeNode(2)),
+            ),
+        ),
+        (
+            # Remove a duplicate value
+            1,
+            (1,),
+            BinarySearchTree(
+                BinaryTreeNode(1, right=BinaryTreeNode(1)),
+            ),
+        ),
+        (
+            # Remove a node with both a left and right subtree
+            8,
+            (2, 3, 4, 15),
+            BinarySearchTree(
+                BinaryTreeNode(
+                    3,
+                    left=BinaryTreeNode(2),
+                    right=BinaryTreeNode(
+                        8,
+                        left=BinaryTreeNode(4),
+                        right=BinaryTreeNode(15),
+                    ),
+                ),
+            ),
+        ),
+        (
+            # Remove a leaf node
+            15,
+            (2, 3, 4, 8),
+            BinarySearchTree(
+                BinaryTreeNode(
+                    3,
+                    left=BinaryTreeNode(2),
+                    right=BinaryTreeNode(
+                        8,
+                        left=BinaryTreeNode(4),
+                        right=BinaryTreeNode(15),
+                    ),
+                ),
+            ),
+        ),
+    ),
+)
+def test_remove(
+    val: int,
+    expected_result: tuple[int, ...],
+    tree: BinarySearchTree[int],
+):
+    tree.remove(val)
+    assert tuple(tree) == expected_result
+
+
+@pytest.mark.parametrize(
+    ("val", "tree"),
+    (
+        (
+            1,
+            BinarySearchTree(),
+        ),
+        (
+            1,
+            BinarySearchTree(BinaryTreeNode(2)),
+        ),
+        (
+            5,
+            BinarySearchTree(
+                BinaryTreeNode(
+                    3,
+                    left=BinaryTreeNode(2),
+                    right=BinaryTreeNode(
+                        8,
+                        left=BinaryTreeNode(4),
+                        right=BinaryTreeNode(15),
+                    ),
+                ),
+            ),
+        ),
+    ),
+)
+def test_remove_not_present_value(
+    val: int,
+    tree: BinarySearchTree[int],
+):
+    with pytest.raises(ValueError):
+        tree.remove(val)
