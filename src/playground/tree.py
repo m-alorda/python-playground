@@ -271,6 +271,9 @@ class BinarySearchTree(Generic[T], Collection[T]):
     def height(self) -> int:
         """1-based height of the tree
 
+        >>> BinarySearchTree().height
+        0
+
         >>> BinarySearchTree(BinaryTreeNode(1)).height
         1
 
