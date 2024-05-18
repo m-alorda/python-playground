@@ -20,7 +20,7 @@ line-length = 88
 target-version = ['py310']
 
 [tool.mypy]
-mypy_path = "src"
+mypy_path = "src test"
 check_untyped_defs = true
 disallow_any_generics = true
 ignore_missing_imports = true
