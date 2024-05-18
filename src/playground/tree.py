@@ -31,6 +31,13 @@ class BinaryTreeNode(Generic[T]):
 class BinarySearchTree(Generic[T], Collection[T]):
     """Simple binary search tree implementation
 
+    >>> tree = BinarySearchTree()
+    >>> tree.add(1)
+    >>> tree.add(3)
+    >>> tree.add(2)
+    >>> tuple(tree)
+    (1, 2, 3)
+
     It can be created from a binary tree represented by BinaryTreeNode:
 
     >>> BinarySearchTree(
@@ -286,3 +293,81 @@ class BinarySearchTree(Generic[T], Collection[T]):
         if not root:
             return 0
         return 1 + max(self._height(root.left), self._height(root.right))
+
+    def add(self, val: T) -> None:
+        """Add a value to the tree
+
+        >>> tree = BinarySearchTree()
+        >>> tree.add(1)
+        >>> tree.add(2)
+        >>> tree.add(3)
+        >>> tuple(tree)
+        (1, 2, 3)
+
+        Duplicates are allowed.
+
+        >>> tree = BinarySearchTree()
+        >>> tree.add(1)
+        >>> tree.add(1)
+        >>> tuple(tree)
+        (1, 1)
+        """
+        node = BinaryTreeNode(val)
+        if not self._root:
+            self._root = node
+            return
+        self._add(self._root, node)
+
+    def _add(self, root: BinaryTreeNode[T], node: BinaryTreeNode[T]) -> None:
+        if root.val > node.val:
+            if root.left:
+                self._add(root.left, node)
+            else:
+                root.left = node
+        else:
+            if root.right:
+                self._add(root.right, node)
+            else:
+                root.right = node
+
+    def remove(self, val: T) -> None:
+        """Remove a value from the tree. Raises a ValueError if not present
+
+        >>> tree = BinarySearchTree(BinaryTreeNode(2, left=BinaryTreeNode(1)))
+        >>> tree.remove(1)
+        >>> tuple(tree)
+        (2,)
+        >>> tree.remove(2)
+        >>> tuple(tree)
+        ()
+        >>> tree.remove(3)
+        Traceback (most recent call last):
+            ...
+        ValueError: 3 is not contained in the tree
+        """
+        self._root = self._remove(self._root, val)
+
+    def _remove(
+        self,
+        root: BinaryTreeNode[T] | None,
+        val: T,
+    ) -> BinaryTreeNode[T] | None:
+        if not root:
+            raise ValueError(f"{val} is not contained in the tree")
+
+        if root.val == val:
+            if root.right:
+                if root.left:
+                    self._add(root.right, root.left)
+                    return root.right
+                return root.right
+            if root.left:
+                return root.left
+            return None
+
+        if root.val > val:
+            root.left = self._remove(root.left, val)
+        else:
+            root.right = self._remove(root.right, val)
+
+        return root
