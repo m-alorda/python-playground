@@ -371,3 +371,58 @@ class BinarySearchTree(Generic[T], Collection[T]):
             root.right = self._remove(root.right, val)
 
         return root
+
+    def balance(self) -> None:
+        """Balances this tree to have minimum height
+
+        >>> tree = BinarySearchTree(
+        ...     BinaryTreeNode(
+        ...         1,
+        ...         right=BinaryTreeNode(
+        ...             2,
+        ...             right=BinaryTreeNode(3),
+        ...         ),
+        ...     ),
+        ... )
+        >>> tree.balance()
+        >>> tree.height
+        2
+
+        Balancing an empty tree has no effect:
+
+        >>> tree = BinarySearchTree()
+        >>> tree.balance()
+        >>> tree.height
+        0
+        """
+        ordered_elements = tuple(self)
+        self._root = self._ordered_list_to_balanced_tree(
+            ordered_elements=ordered_elements,
+            start_index=0,
+            end_index=len(ordered_elements) - 1,
+        )
+
+    def _ordered_list_to_balanced_tree(
+        self,
+        ordered_elements: tuple[T, ...],
+        start_index: int,
+        end_index: int,
+    ) -> BinaryTreeNode[T] | None:
+        if start_index > end_index:
+            return None
+
+        middle_index = start_index + (end_index - start_index) // 2
+        root = BinaryTreeNode(ordered_elements[middle_index])
+
+        root.left = self._ordered_list_to_balanced_tree(
+            ordered_elements=ordered_elements,
+            start_index=start_index,
+            end_index=middle_index - 1,
+        )
+        root.right = self._ordered_list_to_balanced_tree(
+            ordered_elements=ordered_elements,
+            start_index=middle_index + 1,
+            end_index=end_index,
+        )
+
+        return root
