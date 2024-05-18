@@ -2,50 +2,58 @@
 
 import pytest
 
-from playground.tree import BinarySearchTree
+from playground.tree import BinarySearchTree, BinaryTreeNode
 
 
 @pytest.mark.parametrize(
     ("expected_height", "tree"),
     (
         (
+            0,
+            BinarySearchTree(),
+        ),
+        (
             1,
-            BinarySearchTree(1),
+            BinarySearchTree(BinaryTreeNode(1)),
         ),
         (
             3,
             BinarySearchTree(
-                3,
-                left=BinarySearchTree(
-                    2,
-                    left=BinarySearchTree(1),
+                BinaryTreeNode(
+                    3,
+                    left=BinaryTreeNode(
+                        2,
+                        left=BinaryTreeNode(1),
+                    ),
                 ),
             ),
         ),
         (
             5,
             BinarySearchTree(
-                10,
-                left=BinarySearchTree(
-                    6,
-                    left=BinarySearchTree(
-                        3,
-                        right=BinarySearchTree(4),
-                    ),
-                ),
-                right=BinarySearchTree(
-                    16,
-                    left=BinarySearchTree(
-                        13,
-                        left=BinarySearchTree(12),
-                        right=BinarySearchTree(
-                            14,
-                            right=BinarySearchTree(15),
+                BinaryTreeNode(
+                    10,
+                    left=BinaryTreeNode(
+                        6,
+                        left=BinaryTreeNode(
+                            3,
+                            right=BinaryTreeNode(4),
                         ),
                     ),
-                    right=BinarySearchTree(
-                        20,
-                        right=BinarySearchTree(23),
+                    right=BinaryTreeNode(
+                        16,
+                        left=BinaryTreeNode(
+                            13,
+                            left=BinaryTreeNode(12),
+                            right=BinaryTreeNode(
+                                14,
+                                right=BinaryTreeNode(15),
+                            ),
+                        ),
+                        right=BinaryTreeNode(
+                            20,
+                            right=BinaryTreeNode(23),
+                        ),
                     ),
                 ),
             ),

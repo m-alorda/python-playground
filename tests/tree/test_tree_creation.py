@@ -2,59 +2,71 @@
 
 import pytest
 
-from playground.tree import BinarySearchTree
+from playground.tree import BinarySearchTree, BinaryTreeNode
+
+
+def test_can_create_empty_tree():
+    BinarySearchTree()
 
 
 def test_can_create_sorted_tree():
     BinarySearchTree(
-        5,
-        left=BinarySearchTree(
-            3,
-            left=BinarySearchTree(
-                2,
-                left=BinarySearchTree(1),
+        BinaryTreeNode(
+            5,
+            left=BinaryTreeNode(
+                3,
+                left=BinaryTreeNode(
+                    2,
+                    left=BinaryTreeNode(1),
+                ),
+                right=BinaryTreeNode(4),
             ),
-            right=BinarySearchTree(4),
-        ),
-        right=BinarySearchTree(
-            7,
-            left=BinarySearchTree(6),
-            right=BinarySearchTree(
-                8,
-                right=BinarySearchTree(9),
+            right=BinaryTreeNode(
+                7,
+                left=BinaryTreeNode(6),
+                right=BinaryTreeNode(
+                    8,
+                    right=BinaryTreeNode(9),
+                ),
             ),
         ),
     )
 
 
 def test_can_create_tree_with_duplicates():
-    BinarySearchTree(1, left=BinarySearchTree(1), right=BinarySearchTree(1))
+    BinarySearchTree(BinaryTreeNode(1, left=BinaryTreeNode(1), right=BinaryTreeNode(1)))
 
 
 def test_can_not_create_unsorted_tree_from_the_root():
     with pytest.raises(ValueError):
         BinarySearchTree(
-            1,
-            left=BinarySearchTree(
-                # Is larger and to the left of the root
-                2
+            BinaryTreeNode(
+                1,
+                left=BinaryTreeNode(
+                    # Is larger and to the left of the root
+                    2
+                ),
             ),
         )
     with pytest.raises(ValueError):
         BinarySearchTree(
-            2,
-            right=BinarySearchTree(
-                # Is smaller and to the right of the root
-                1
+            BinaryTreeNode(
+                2,
+                right=BinaryTreeNode(
+                    # Is smaller and to the right of the root
+                    1
+                ),
             ),
         )
     with pytest.raises(ValueError):
         BinarySearchTree(
-            2,
-            left=BinarySearchTree(1),
-            right=BinarySearchTree(
-                # Is smaller and to the right of the root
-                1
+            BinaryTreeNode(
+                2,
+                left=BinaryTreeNode(1),
+                right=BinaryTreeNode(
+                    # Is smaller and to the right of the root
+                    1
+                ),
             ),
         )
 
@@ -62,25 +74,29 @@ def test_can_not_create_unsorted_tree_from_the_root():
 def test_can_not_create_unsorted_tree_from_its_parent():
     with pytest.raises(ValueError):
         BinarySearchTree(
-            2,
-            left=BinarySearchTree(1),
-            right=BinarySearchTree(
-                3,
-                left=BinarySearchTree(
-                    # Is larger and to the left of its parent
-                    4
+            BinaryTreeNode(
+                2,
+                left=BinaryTreeNode(1),
+                right=BinaryTreeNode(
+                    3,
+                    left=BinaryTreeNode(
+                        # Is larger and to the left of its parent
+                        4
+                    ),
                 ),
             ),
         )
     with pytest.raises(ValueError):
         BinarySearchTree(
-            3,
-            left=BinarySearchTree(2),
-            right=BinarySearchTree(
-                5,
-                right=BinarySearchTree(
-                    # Is smaller and to the right of its parent
-                    4
+            BinaryTreeNode(
+                3,
+                left=BinaryTreeNode(2),
+                right=BinaryTreeNode(
+                    5,
+                    right=BinaryTreeNode(
+                        # Is smaller and to the right of its parent
+                        4
+                    ),
                 ),
             ),
         )
@@ -89,72 +105,80 @@ def test_can_not_create_unsorted_tree_from_its_parent():
 def test_can_not_create_unsorted_tree_from_the_root_in_a_higher_level():
     with pytest.raises(ValueError):
         BinarySearchTree(
-            3,
-            left=BinarySearchTree(2),
-            right=BinarySearchTree(
-                4,
-                left=BinarySearchTree(
-                    # Is smaller and to the left of the root
-                    1
-                ),
-            ),
-        )
-    with pytest.raises(ValueError):
-        BinarySearchTree(
-            50,
-            left=BinarySearchTree(
-                20,
-                left=BinarySearchTree(
-                    10,
-                    right=BinarySearchTree(
-                        # Is larger and to the left 20
-                        30
-                    ),
-                ),
-            ),
-            right=BinarySearchTree(80),
-        )
-    with pytest.raises(ValueError):
-        BinarySearchTree(
-            40,
-            left=BinarySearchTree(
-                20,
-                right=BinarySearchTree(
-                    30,
-                    left=BinarySearchTree(
-                        # Is smaller and to the right 20
-                        10,
-                        right=BinarySearchTree(24),
+            BinaryTreeNode(
+                3,
+                left=BinaryTreeNode(2),
+                right=BinaryTreeNode(
+                    4,
+                    left=BinaryTreeNode(
+                        # Is smaller and to the left of the root
+                        1
                     ),
                 ),
             ),
         )
     with pytest.raises(ValueError):
         BinarySearchTree(
-            10,
-            left=BinarySearchTree(
-                6,
-                left=BinarySearchTree(
-                    3,
-                    right=BinarySearchTree(4),
-                ),
-            ),
-            right=BinarySearchTree(
-                16,
-                left=BinarySearchTree(
-                    13,
-                    left=BinarySearchTree(
-                        # Is smaller and to the right of the root
-                        8
-                    ),
-                    right=BinarySearchTree(
-                        14,
-                        right=BinarySearchTree(15),
-                    ),
-                ),
-                right=BinarySearchTree(
+            BinaryTreeNode(
+                50,
+                left=BinaryTreeNode(
                     20,
-                    right=BinarySearchTree(23),
+                    left=BinaryTreeNode(
+                        10,
+                        right=BinaryTreeNode(
+                            # Is larger and to the left 20
+                            30
+                        ),
+                    ),
+                ),
+                right=BinaryTreeNode(80),
+            ),
+        )
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            BinaryTreeNode(
+                40,
+                left=BinaryTreeNode(
+                    20,
+                    right=BinaryTreeNode(
+                        30,
+                        left=BinaryTreeNode(
+                            # Is smaller and to the right 20
+                            10,
+                            right=BinaryTreeNode(24),
+                        ),
+                    ),
+                ),
+            ),
+        )
+    with pytest.raises(ValueError):
+        BinarySearchTree(
+            BinaryTreeNode(
+                10,
+                left=BinaryTreeNode(
+                    6,
+                    left=BinaryTreeNode(
+                        3,
+                        right=BinaryTreeNode(4),
+                    ),
+                ),
+                right=BinaryTreeNode(
+                    16,
+                    left=BinaryTreeNode(
+                        13,
+                        left=BinaryTreeNode(
+                            # Is smaller and to the right of the root
+                            8
+                        ),
+                        right=BinaryTreeNode(
+                            14,
+                            right=BinaryTreeNode(15),
+                        ),
+                    ),
+                    right=BinaryTreeNode(
+                        20,
+                        right=BinaryTreeNode(23),
+                    ),
                 ),
             ),
         )
